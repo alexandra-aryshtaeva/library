@@ -2,3 +2,12 @@
   background-color: grey;
   opacity: 0.5;
 }
+
+.book {
+  margin-top: 200px;
+  margin-left: 200px;
+  height: 300px;
+  width: 300px;
+  border: solid;
+  background-color: salmon;
+}
