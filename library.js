@@ -1,56 +1,67 @@
-const nameInput = document.querySelector("#book_name");
-const authorInput = document.querySelector("#book_author");
-const pagesInput = document.querySelector("#book_pages");
-let addBookBtn = document.querySelector("add_book_btn");
+let nameInput = document.querySelector("#book_name");
+let authorInput = document.querySelector("#book_author");
+let pagesInput = document.querySelector("#book_pages");
+let readInput = document.querySelector("#book_read");
+
+let addBookBtn = document.querySelector("#add_book_btn");
 
 // ________________________________________
+// examaple
+let book1 = new Book("The Hobiit", "J.R.R. Tolkien", "320");
 
-const myLibrary = [];
+let myLibrary = [book1];
 
-function Book(name, author, pages) {
+function Book(name, author, pages, read) {
   this.name = name;
   this.author = author;
   this.pages = pages;
+  this.read = read;
 }
 
-// examaple
-const book1 = new Book("The Hobiit", "J.R.R. Tolkien", "320");
-
-// addBookBtn.addEventListener("click", () => {
-//   book.innerHTML = "ndkjsa";
-// });
+// _________________________________________________
 
 function addBook() {
   myLibrary.push(
-    new Book(nameInput.value, authorInput.value, pagesInput.value)
+    new Book(
+      nameInput.value,
+      authorInput.value,
+      pagesInput.value,
+      readInput.value
+    )
   );
-
-  console.log(myLibrary);
 
   renderBooks();
 }
 
-function removeBook() {
+function removeBook(index) {
+  myLibrary.splice(index, 1);
   console.log(myLibrary);
+  renderBooks();
+}
+
+function renderBooks() {
+  library = document.createElement("div");
 }
 
 function renderBooks() {
   const library = document.querySelector(".library");
+  library.innerHTML = "";
 
-  // library.innerHTML = "";
+  myLibrary.forEach((b, idx) => {
+    let book = document.createElement("div");
+    book.innerHTML = `
+      <p> Book name: ${b.name}</p>
+      <p> Author name: ${b.author}</p>
+      <p> Number of pages: ${b.pages}</p>
+    <input id="check" ${b.read ? "checked" : ""} type="checkbox">Read
 
-  // // book.innerHTML = `
-  // //   <p> Book name: ${nameInput.value}</p>
-  // // <p> Author name: ${authorInput.value}</p>
-  // // <p> Number of pages: ${pagesInput.value}</p>
-  // // `;
+      <button class="delete" onclick="removeBook(${idx})" >Delete</button>
+    
+      `;
 
-  // myLibrary.forEach((b) => {
-  //   const book = document.createElement("div");
-  //   book.classList.add("book");
-  //   const name = document.createElement("p");
-  //   name.innerText = "";
-
-  //   library.appendChild(book);
-  // });
+    book.classList.add("book");
+    library.appendChild(book);
+  });
 }
+
+renderBooks();
